@@ -1,0 +1,22 @@
+<section class="card shadow p-4 my-2">
+    <h2>{{ draft.name }}</h2>
+    <h4>{{ draft.startTime }}</h4>
+    <h4>{{ draft.location }}</h4>
+</section>
+<section>
+    <app-current-pick [picks]="picks" [currentPick]="draft.currentPick"></app-current-pick>
+</section>
+<div class="row">
+    <section class="col-4">
+        <h5>Teams</h5>
+        <ul>
+            <li *ngFor="let team of draft.teams" class="list-unstyled p-2">
+                <span>{{ team.name }}</span>
+            </li>
+        </ul>
+    </section>
+    <section class="col-8">
+        <app-player-list [players]="players"></app-player-list>
+    </section>
+</div>
+

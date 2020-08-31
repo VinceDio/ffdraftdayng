@@ -1,0 +1,22 @@
+<ul class="list-group list-group-horizontal">
+    <li class="list-group-item p-2" *ngIf="currentPick > 0">
+        <div class="font-weight-bold">Previous Pick</div>
+        <span>{{ picks[currentPick - 1].round }}-{{ picks[currentPick - 1].selection}}</span>
+        {{ picks[currentPick - 1].team.name }}        
+    </li>
+    <li class="list-group-item p-2">
+        <div class="font-weight-bold">Current Pick</div>
+        <span>{{ picks[currentPick].round }}-{{ picks[currentPick].selection}}</span>
+        {{ picks[currentPick].team.name }}
+    </li>
+    <li class="list-group-item p-2" *ngIf="currentPick < picks.length - 1">
+        <div class="font-weight-bold">Next Pick</div>
+        <span>{{ picks[currentPick + 1].round }}-{{ picks[currentPick + 1].selection}}</span>
+        {{ picks[currentPick + 1].team.name }}        
+    </li>
+    <li class="list-group-item p-2" *ngIf="currentPick < picks.length - 2">
+        <div class="font-weight-bold">2 Picks Away</div>
+        <span>{{ picks[currentPick + 2].round }}-{{ picks[currentPick + 2].selection}}</span>
+        {{ picks[currentPick + 2].team.name }}        
+    </li>
+</ul>
