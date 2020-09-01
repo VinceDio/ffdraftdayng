@@ -8,8 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CurrentPickComponent implements OnInit {
 
   @Input() picks: any;
-  @Input() currentPick: number;
-
+ 
   constructor() { }
 
   ngOnInit(): void {

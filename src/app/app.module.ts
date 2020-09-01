@@ -8,6 +8,7 @@ import { DraftService } from './draft.service';
 import { HttpClientModule } from '@angular/common/http';
 import { PlayerListComponent } from './player-list/player-list.component';
 import { CurrentPickComponent } from './current-pick/current-pick.component';
+import { DraftPick } from './models/draft-pick';
 
 @NgModule({
   declarations: [

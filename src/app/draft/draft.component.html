@@ -4,7 +4,7 @@
     <h4>{{ draft.location }}</h4>
 </section>
 <section>
-    <app-current-pick [picks]="picks" [currentPick]="draft.currentPick"></app-current-pick>
+    <app-current-pick [picks]="getCurrentPicks()"></app-current-pick>
 </section>
 <div class="row">
     <section class="col-4">
