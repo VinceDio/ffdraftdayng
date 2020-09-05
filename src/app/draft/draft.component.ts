@@ -16,17 +16,20 @@ export class DraftComponent implements OnInit {
   public currentPick: any;
 
   constructor(private svc: DraftService) { 
-    svc.get(1).subscribe((data: any) => this.draft = data);
-    svc.getPicks(1).subscribe((data: DraftPick[]) => this.picks = data);
-    svc.getPlayers(1).subscribe((data: any) => this.players = data);
+ 
   }
 
   ngOnInit(): void {
+    this.svc.get(1).subscribe(data => this.draft = data);
+    this.svc.getPicks(1).subscribe(data => this.picks = data);
+    this.svc.getPlayers(1).subscribe(data => this.players = data);
   }
 
-  getCurrentPicks(): any {
+  getCurrentPicks(): DraftPick[] {
+    console.log(this.draft);
     console.log(this.picks);
-    let begPick = this.currentPick - 2;
+    this.currentPick = this.draft.currentPick;
+    let begPick = this.currentPick - 3;
     if (begPick < 0) begPick = 0;
     let endPick = this.currentPick + 3;
     if (endPick > this.picks.length - 1) endPick = this.picks.length - 1;

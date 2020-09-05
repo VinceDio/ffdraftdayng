@@ -1,1 +1,9 @@
-@import '~bootstrap/dist/css/bootstrap.min.css'
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+.bg-blue {
+    background-color: #111c5c;
+}
+
+.bg-lightred {
+    background-color: #f59ca8;
+}

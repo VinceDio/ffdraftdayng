@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { DraftPick } from '../models/draft-pick';
 
 @Component({
   selector: 'app-current-pick',
@@ -7,7 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CurrentPickComponent implements OnInit {
 
-  @Input() picks: any;
+  @Input() picks: DraftPick[];
+  @Input() currentPick: number;
  
   constructor() { }
 
