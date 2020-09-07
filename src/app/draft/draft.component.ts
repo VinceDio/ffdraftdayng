@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { DraftService } from '../draft.service';
 import { DraftPick } from '../models/draft-pick';
 import { Observable } from 'rxjs';
+import { Draft } from '../models/draft';
+import { Team } from '../models/team';
+import { Player } from '../models/player';
+import { PlayerListComponent } from '../player-list/player-list.component';
 
 @Component({
   selector: 'app-draft',
@@ -10,11 +14,11 @@ import { Observable } from 'rxjs';
 })
 export class DraftComponent implements OnInit {
 
-  public draft: any;
+  public draft: Draft;
   public picks: DraftPick[];
   public players: any;
   public currentPick: any;
-
+  
   constructor(private svc: DraftService) { 
  
   }
@@ -26,8 +30,6 @@ export class DraftComponent implements OnInit {
   }
 
   getCurrentPicks(): DraftPick[] {
-    console.log(this.draft);
-    console.log(this.picks);
     this.currentPick = this.draft.currentPick;
     let begPick = this.currentPick - 3;
     if (begPick < 0) begPick = 0;
@@ -35,6 +37,12 @@ export class DraftComponent implements OnInit {
     if (endPick > this.picks.length - 1) endPick = this.picks.length - 1;
     let upcomingPicks = this.picks.slice(begPick, endPick);
     return upcomingPicks;
+  }
+
+  getCurrentTeamPlayers(): Player[] {
+    let teamPlayers: Player[] = [];
+    teamPlayers.push({ "name": "Vinnie D", "position" : "RB", "id" : 1, "bye": 1, "nflTeam" : "PIT", "rank" : 1 });
+    return teamPlayers;
   }
 
 }
