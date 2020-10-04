@@ -1,0 +1,14 @@
+#selected-player {
+    padding: 8px;
+    margin-bottom: 8px;
+    background-color: #c9d6e2;
+    height: 17vh;
+}
+
+#player-list {
+    padding: 8px;
+    overflow: scroll;
+    height: 40vh;
+    border: 1px solid lightgray;
+}
+

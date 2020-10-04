@@ -5,9 +5,13 @@
 }
 
 .bg-lightred {
-    background-color: #f59ca8;
+    background-color: #f9d2d7;
 }
 
+.highlighted {
+    background-color: darkred;
+    color: white;
+}
 
 .pos-pill {
     color: white;
