@@ -1,21 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DraftPick } from './models/draft-pick';
+import { Player } from './models/player';
 import { Draft } from './models/draft';
-import { Observable, ObservableLike } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DraftComponent } from './draft/draft.component';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class DraftService {
+export class DraftService implements OnInit {
+
 
   private headers: HttpHeaders;
   private apiRoot: string = 'https://localhost:44378/api/drafts/';
 
   constructor(private http: HttpClient) { 
-    this.headers = new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'});
+   
+  }
+
+  
+  ngOnInit() {
+    this.headers = new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'}); 
   }
 
   public get(id: number): Observable<Draft> {
@@ -27,6 +34,6 @@ export class DraftService {
   }
 
   public getPlayers(draftId: number) {
-    return this.http.get(this.apiRoot + draftId.toString() + '/players', { headers: this.headers });
+    return this.http.get<Player[]>(this.apiRoot + draftId.toString() + '/players', { headers: this.headers });
   }
 }

@@ -1,6 +1,20 @@
+<section id="selected-player" >
+    <h5>Selected Player</h5>
+    <div *ngIf="selectedPlayer">
+        <h4>{{ selectedPlayer?.name }}</h4>
+        <div>
+            {{ selectedPlayer?.position }} {{ selectedPlayer?.nflTeam }}
+        </div>
+        <div>
+            <button (click)="DraftPlayer(selectedPlayer)" class="btn btn-primary mt-2">Draft</button>
+        </div>
+    </div>
+</section>
 <h5>Players</h5>
-<ul class="list-unstyled">
-    <li *ngFor="let player of players">
-        {{ player.rank }}. {{ player.name }} {{ player.position }} {{ player.nflTeam }}
-    </li> 
-</ul>
+<div id="player-list">
+    <ul class="list-unstyled">
+        <li *ngFor="let player of players" (click)="SelectPlayer(player)" [class.highlighted]="player == selectedPlayer" class="p-1">
+            {{ player.rank }}. {{ player.name }} {{ player.position }} {{ player.nflTeam }}
+        </li> 
+    </ul>
+</div>
