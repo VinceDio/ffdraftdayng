@@ -1,3 +1,4 @@
+import { DraftPick } from './draft-pick';
 import { Team } from './team';
 
 export class Draft {
@@ -8,7 +9,7 @@ export class Draft {
     public startTime: Date;
     public clockSeconds: number;
     public status: string;
-    public currentPick: number;
+    public currentPick: DraftPick;
     public teams: Team[];
 
 }

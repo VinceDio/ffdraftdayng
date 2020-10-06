@@ -1,7 +1,10 @@
 <h5>Upcoming Picks</h5>
 <ul class="list-group list-group-horizontal" *ngIf="picks">
-    <li class="list-group-item p-2 col-2" [ngClass]="pick.overallPick==currentPick ? 'bg-primary text-white' : 'bg-light'" *ngFor="let pick of picks">
-        <div class="font-weight-bold">{{ pick.overallPick == currentPick ? "Current" : (pick.overallPick < currentPick ? "Previous Picks" : (pick.overallPick==currentPick+1 ? "Next" : pick.overallPick - currentPick + " Picks Away")) }}</div>
+    <li class="list-group-item p-2 col-2" [ngClass]="pick.overallPick == currentPick.overallPick ? 'bg-primary text-white' : 'bg-light'" *ngFor="let pick of picks">
+        <div class="font-weight-bold">
+            {{ pick.overallPick == currentPick.overallPick ? "Current" : (pick.overallPick < currentPick.overallPick 
+                ? "Previous Picks" : (pick.overallPick == currentPick.overallPick + 1 ? "Next" : pick.overallPick - currentPick.overallPick + " Picks Away")) }}
+        </div>
         <span>{{ pick.round }}-{{ pick.selection}}</span>
         <div class="small">{{ pick.team.name }}</div>
         <div>{{ pick.team.owner }}</div>

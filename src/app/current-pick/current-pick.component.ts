@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { DraftPick } from '../models/draft-pick';
 
 @Component({
@@ -9,8 +9,8 @@ import { DraftPick } from '../models/draft-pick';
 export class CurrentPickComponent implements OnInit {
 
   @Input() picks: DraftPick[];
-  @Input() currentPick: number;
- 
+  @Input() currentPick: DraftPick;
+
   constructor() { }
 
   ngOnInit(): void {

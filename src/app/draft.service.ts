@@ -5,6 +5,7 @@ import { Player } from './models/player';
 import { Draft } from './models/draft';
 import { Observable } from 'rxjs';
 import { DraftComponent } from './draft/draft.component';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -25,7 +26,7 @@ export class DraftService implements OnInit {
     this.headers = new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'}); 
   }
 
-  public get(id: number): Observable<Draft> {
+  public getDraft(id: number): Observable<Draft> {
     return this.http.get<Draft>(this.apiRoot + id.toString(), {headers: this.headers});
   }
 
@@ -36,4 +37,13 @@ export class DraftService implements OnInit {
   public getPlayers(draftId: number) {
     return this.http.get<Player[]>(this.apiRoot + draftId.toString() + '/players', { headers: this.headers });
   }
+
+  public postPick(draftId: number, pick: DraftPick) {
+    return this.http.post<DraftPick>(this.apiRoot + draftId.toString() + '/pick', pick, { headers: this.headers });
+  }
+
+  private handleError(endpoint: string, error: string) {
+      console.log(endpoint + ": " + error);
+  }
+
 }

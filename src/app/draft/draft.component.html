@@ -29,7 +29,7 @@
             </section>
         </section>
         <section class="col-8">
-            <app-player-list [players]="players"></app-player-list>
+            <app-player-list [players]="players" (draftedPlayer)="draftPlayer($event)"></app-player-list>
         </section>
     </div>
     

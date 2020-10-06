@@ -16,29 +16,29 @@ import { PlayerListComponent } from '../player-list/player-list.component';
 export class DraftComponent implements OnInit {
 
   public draft$: Observable<Draft>;
-  public currentPickNo$: Observable<number>;
+  public currentPick$: Observable<DraftPick>;
   public picks: DraftPick[];
   public players: Player[];
-  public currentPick: number;
+  public currentPick: DraftPick;
   
   constructor(private svc: DraftService) { 
  
   }
 
   ngOnInit(): void {
-    this.draft$ = this.svc.get(1);
+    this.draft$ = this.svc.getDraft(1);
     this.svc.getPicks(1).subscribe(data => this.picks = data);
     this.svc.getPlayers(1).subscribe(data => this.players = data);
-    this.currentPickNo$ = this.draft$.pipe(
+    this.currentPick$ = this.draft$.pipe(
       map(draft => draft.currentPick)
     );
     this.draft$.subscribe(data => this.currentPick = data.currentPick);
   }
 
   getCurrentPicks(): DraftPick[] {
-    let begPick = this.currentPick - 3;
+    let begPick = this.currentPick.overallPick - 3;
     if (begPick < 0) begPick = 0;
-    let endPick = this.currentPick + 3;
+    let endPick = this.currentPick.overallPick + 3;
     if (endPick > this.picks.length - 1) endPick = this.picks.length - 1;
     let upcomingPicks = this.picks.slice(begPick, endPick);
     return upcomingPicks;
@@ -48,5 +48,11 @@ export class DraftComponent implements OnInit {
     let teamPlayers: Player[] = [];
     teamPlayers.push({ "name": "Vinnie D", "position" : "RB", "id" : 1, "bye": 1, "nflTeam" : "PIT", "rank" : 1 });
     return teamPlayers;
+  }
+
+  draftPlayer(selectedPlayer: Player) {
+    this.currentPick.player = selectedPlayer;
+    this.svc.postPick(1, this.currentPick).subscribe();
+    this.svc.getDraft(1).subscribe(data => this.currentPick = data.currentPick);
   }
 }

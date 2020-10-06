@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { DraftPick } from '../models/draft-pick';
 import { Player } from '../models/player';
 
 @Component({
@@ -9,6 +10,7 @@ import { Player } from '../models/player';
 export class PlayerListComponent implements OnInit {
 
   @Input() players: any;
+  @Output() draftedPlayer: EventEmitter<Player> = new EventEmitter<Player>();
   
   public selectedPlayer : Player;
 
@@ -23,7 +25,7 @@ export class PlayerListComponent implements OnInit {
   }
 
   public DraftPlayer(player: Player) {
-    
+    this.draftedPlayer.emit(player);
   }
 
 }
