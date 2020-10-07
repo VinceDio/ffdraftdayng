@@ -9,13 +9,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { PlayerListComponent } from './player-list/player-list.component';
 import { CurrentPickComponent } from './current-pick/current-pick.component';
 import { DraftPick } from './models/draft-pick';
+import { RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DraftComponent,
     PlayerListComponent,
-    CurrentPickComponent
+    CurrentPickComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

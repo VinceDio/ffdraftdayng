@@ -7,6 +7,7 @@ import { Draft } from '../models/draft';
 import { Team } from '../models/team';
 import { Player } from '../models/player';
 import { PlayerListComponent } from '../player-list/player-list.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-draft',
@@ -16,19 +17,23 @@ import { PlayerListComponent } from '../player-list/player-list.component';
 export class DraftComponent implements OnInit {
 
   public draft$: Observable<Draft>;
+  private draft: Draft;
   public currentPick$: Observable<DraftPick>;
   public picks: DraftPick[];
   public players: Player[];
   public currentPick: DraftPick;
   
-  constructor(private svc: DraftService) { 
- 
-  }
+  constructor(
+    private svc: DraftService, 
+    private route: ActivatedRoute 
+  ) { }
 
   ngOnInit(): void {
-    this.draft$ = this.svc.getDraft(1);
-    this.svc.getPicks(1).subscribe(data => this.picks = data);
-    this.svc.getPlayers(1).subscribe(data => this.players = data);
+    const draftId: number = +this.route.snapshot.paramMap.get('id');
+    this.draft$ = this.svc.getDraft(draftId);
+    this.draft$.subscribe(draft => this.draft = draft);
+    this.svc.getPicks(draftId).subscribe(data => this.picks = data);
+    this.svc.getPlayers(draftId).subscribe(data => this.players = data);
     this.currentPick$ = this.draft$.pipe(
       map(draft => draft.currentPick)
     );
@@ -52,7 +57,8 @@ export class DraftComponent implements OnInit {
 
   draftPlayer(selectedPlayer: Player) {
     this.currentPick.player = selectedPlayer;
-    this.svc.postPick(1, this.currentPick).subscribe();
-    this.svc.getDraft(1).subscribe(data => this.currentPick = data.currentPick);
+    this.svc.postPick(this.draft.id, this.currentPick).subscribe();
+    this.draft$.subscribe(draft => this.draft = draft);
+    this.currentPick = this.draft.currentPick;
   }
 }
