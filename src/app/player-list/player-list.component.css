@@ -2,13 +2,13 @@
     padding: 8px;
     margin-bottom: 8px;
     background-color: #c9d6e2;
-    height: 17vh;
+    height: 15vh;
 }
 
 #player-list {
     padding: 8px;
     overflow: scroll;
-    height: 40vh;
+    height: 27vh;
     border: 1px solid lightgray;
 }
 

@@ -1,12 +1,12 @@
 <section id="selected-player" >
     <h5>Selected Player</h5>
     <div *ngIf="selectedPlayer">
-        <h4>{{ selectedPlayer?.name }}</h4>
         <div>
-            {{ selectedPlayer?.position }} {{ selectedPlayer?.nflTeam }}
+            <span class="h4">{{ selectedPlayer?.name }}</span>
+            <button (click)="DraftPlayer(selectedPlayer)" class="btn btn-primary ml-2">Draft</button>
         </div>
         <div>
-            <button (click)="DraftPlayer(selectedPlayer)" class="btn btn-primary mt-2">Draft</button>
+            {{ selectedPlayer?.position }} {{ selectedPlayer?.nflTeam }}
         </div>
     </div>
 </section>

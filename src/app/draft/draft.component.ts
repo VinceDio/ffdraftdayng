@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DraftService } from '../draft.service';
 import { DraftPick } from '../models/draft-pick';
-import { Observable, Subscription } from 'rxjs';
+import { observable, Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Draft } from '../models/draft';
 import { Team } from '../models/team';
@@ -22,6 +22,10 @@ export class DraftComponent implements OnInit {
   public picks: DraftPick[];
   public players: Player[];
   public currentPick: DraftPick;
+  public upcomingPicks: DraftPick[];
+  public selectedTeam: Team;
+  public $selectedTeamPlayers: Observable<Player[]>;
+  public selectedTeamPlayers: Player[];
   
   constructor(
     private svc: DraftService, 
@@ -34,13 +38,27 @@ export class DraftComponent implements OnInit {
     this.draft$.subscribe(draft => this.draft = draft);
     this.svc.getPicks(draftId).subscribe(data => this.picks = data);
     this.svc.getPlayers(draftId).subscribe(data => this.players = data);
-    this.currentPick$ = this.draft$.pipe(
-      map(draft => draft.currentPick)
+    this.draft$.pipe(
+      map(draft => 
+        {
+            this.currentPick = draft.currentPick;
+        })
     );
-    this.draft$.subscribe(data => this.currentPick = data.currentPick);
+    this.draft$.subscribe(data => 
+      {
+        this.currentPick = data.currentPick;
+        this.upcomingPicks = this.getUpcomingPicks();
+        if (!this.selectedTeam) 
+        { 
+          this.selectedTeam = this.currentPick.team;
+          this.getSelectedTeamPlayers();
+        }
+      }
+    );
+
   }
 
-  getCurrentPicks(): DraftPick[] {
+  getUpcomingPicks(): DraftPick[] {
     let begPick = this.currentPick.overallPick - 3;
     if (begPick < 0) begPick = 0;
     let endPick = this.currentPick.overallPick + 3;
@@ -49,10 +67,9 @@ export class DraftComponent implements OnInit {
     return upcomingPicks;
   }
 
-  getCurrentTeamPlayers(): Player[] {
-    let teamPlayers: Player[] = [];
-    teamPlayers.push({ "name": "Vinnie D", "position" : "RB", "id" : 1, "bye": 1, "nflTeam" : "PIT", "rank" : 1 });
-    return teamPlayers;
+  getSelectedTeamPlayers() {
+    let players = this.picks.filter(p => p.team.id == this.selectedTeam.id && p.player).map(p => p.player);
+    this.selectedTeamPlayers = players;
   }
 
   draftPlayer(selectedPlayer: Player) {
@@ -60,5 +77,11 @@ export class DraftComponent implements OnInit {
     this.svc.postPick(this.draft.id, this.currentPick).subscribe();
     this.draft$.subscribe(draft => this.draft = draft);
     this.currentPick = this.draft.currentPick;
+    this.upcomingPicks = this.getUpcomingPicks();
+  }
+
+  selectTeam(team: Team) {
+      this.selectedTeam = team;
+      this.getSelectedTeamPlayers();
   }
 }
